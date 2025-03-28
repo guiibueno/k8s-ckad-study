@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment
+  namespace: sample-app
+spec:
+  replicas: 4
+
+  selector:
+    matchLabels:
+      app: sample
+
+  template:
+    metadata:
+      labels:
+        app: sample
+        owner: bueno
+        mylabel: i_am_another_label
+        version: v2.0.0
+
+    spec:
+      containers:
+      - name: nginx-server
+        image: nginx
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
+      - name: fluentbit
+        image: fluent/fluent-bit
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
